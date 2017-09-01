@@ -12,10 +12,10 @@ import {
 function posts (state = {}, action) {
   switch (action.type) {
     case GET_POSTS :
-    console.log(action.posts)
-      return action.posts
+      console.log(action)
+      return action.payload
     case ADD_POST :
-      return { ...state, [action.post.id]: action.post }
+      return { ...state, [action.payload.id]: action.payload }
     default :
       return state
   }
@@ -24,7 +24,7 @@ function posts (state = {}, action) {
 function categories (state = {}, action) {
   switch (action.type) {
     case GET_CATEGORIES :
-      return action.categories
+      return action.payload
     default :
       return state
   }
@@ -33,7 +33,7 @@ function categories (state = {}, action) {
 function comments (state = {}, action) {
   switch (action.type) {
     case GET_COMMENTS :
-      return action.comment
+      return action.payload
     default :
       return state
   }
@@ -42,7 +42,7 @@ function comments (state = {}, action) {
 function post (state = {}, action) {
   switch (action.type) {
     case GET_POST :
-      return action.post
+      return action.payload
     default :
       return state
   }
