@@ -14,34 +14,34 @@ export function getPosts(category) {
 
   return {
     type: GET_POSTS,
-    posts
+    payload: posts
   }
 }
 
 export function getCategories(categories) {
   return {
     type: GET_CATEGORIES,
-    categories
+    payload: categories
   }
 }
 
 export function getComments(comments) {
   return {
     type: GET_COMMENTS,
-    comments
+    payload: comments
   }
 }
 
 export function getPost(post) {
   return {
     type: GET_POST,
-    post
+    payload: post
   }
 }
 
 export function addPost(post) {
   return {
     type: ADD_POST,
-    post
+    payload: post
   }
 }
