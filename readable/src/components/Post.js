@@ -7,15 +7,59 @@ import UpArrowIcon from 'react-icons/lib/fa/arrow-circle-o-up';
 import DownArrowIcon from 'react-icons/lib/fa/arrow-circle-down';
 import HomeIcon from 'react-icons/lib/fa/home';
 import Moment from 'react-moment';
-import API from '../utils';
 import { getPost, getComments } from '../actions';
 
 class Post extends Component {
   componentDidMount() {
-    API.getPost(this.props.match.params.post_id).then(post => {
-      this.props.getPost(post);
-    });
+    this.props.getPost(this.props.match.params.post_id);
+    this.props.getComments(this.props.match.params.post_id);
   }
+
+  generateCommentsList = () => {
+    if (Object.keys(this.props.comments).length === 0) {
+      return (
+        <Row className="post">
+          <Col xs={12}>No comments to show in this post.</Col>
+        </Row>
+      );
+    }
+
+    return Object.keys(this.props.comments).map(key => {
+      const comment = this.props.comments[key];
+
+      return (
+        <Row key={comment.id} className="post">
+          <Col className="voteScore" xs={5} sm={2}>
+            <UpArrowIcon className="arrow" />
+            <div className="score">{comment.voteScore}</div>
+            <DownArrowIcon className="arrow" />
+          </Col>
+          <Col className="postRow" xs={7} sm={10}>
+            <div className="submittedBy">
+              <strong>{comment.author}</strong> commented <Moment fromNow>{comment.timestamp}</Moment>
+            </div>
+            <div className="body"><Panel>{comment.body}</Panel></div>
+            <Button
+            bsStyle="link"
+            onClick={() => {
+              this.props.history.push('/edit');
+            }}
+          >
+            Edit
+          </Button>
+          <Button
+            bsStyle="link"
+            onClick={() => {
+              this.props.history.push('/delete');
+            }}
+          >
+            Delete
+          </Button>
+          </Col>
+        </Row>
+      );
+    });
+  };
 
   render() {
     return (
@@ -70,6 +114,9 @@ class Post extends Component {
               </Button>
             </Col>
           </Row>
+
+          {this.generateCommentsList()}
+
         </Grid>
       </div>
     );

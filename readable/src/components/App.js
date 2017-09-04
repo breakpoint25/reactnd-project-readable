@@ -7,8 +7,7 @@ import UpArrowIcon from 'react-icons/lib/fa/arrow-circle-o-up';
 import DownArrowIcon from 'react-icons/lib/fa/arrow-circle-down';
 import HomeIcon from 'react-icons/lib/fa/home';
 import Moment from 'react-moment';
-import API from '../utils';
-import { getPosts, getCategories } from '../actions';
+import { getPosts } from '../actions';
 import {
   Grid,
   Row,
@@ -21,10 +20,6 @@ import {
 class App extends Component {
   componentDidMount() {
     this.props.getPosts(this.props.match.params.category);
-
-    API.getCategories().then(categories => {
-      this.props.getCategories(categories);
-    });
   }
 
   generatePostsList = () => {
@@ -72,7 +67,7 @@ class App extends Component {
               <Link to="/">
                 <HomeIcon className="homeIcon" />
               </Link>
-              <DropdownButton id='sort' bsStyle="default" title="Sort order">
+              <DropdownButton id="sort" bsStyle="default" title="Sort order">
                 <MenuItem eventKey="1" active>
                   Date suvmitted
                 </MenuItem>
@@ -104,14 +99,12 @@ class App extends Component {
 function mapStateToProps(state) {
   return {
     posts: state.posts,
-    categories: state.categories,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     getPosts: data => dispatch(getPosts(data)),
-    getCategories: data => dispatch(getCategories(data)),
   };
 }
 
