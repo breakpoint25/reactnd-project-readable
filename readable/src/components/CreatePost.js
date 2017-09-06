@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import HomeIcon from 'react-icons/lib/fa/home';
-import { Field, reduxForm } from 'redux-form';
-import { getCategories } from '../actions';
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
+import HomeIcon from 'react-icons/lib/fa/home'
+import { Field, reduxForm } from 'redux-form'
+import { getCategories, createPost } from '../actions'
 import {
   Grid,
   Row,
@@ -14,26 +14,29 @@ import {
   FormGroup,
   ControlLabel,
   FormControl,
-} from 'react-bootstrap';
+} from 'react-bootstrap'
 
 class CreatePost extends Component {
   renderInputField(field) {
     return (
-      <FormGroup>
+      <FormGroup className="has-danger">
         <ControlLabel>{field.label}</ControlLabel>
         <FormControl type="text" placeholder={field.label} {...field.input} />
+        <div className="danger">
+          {field.meta.touched ? field.meta.error : ''}
+        </div>
       </FormGroup>
-    );
+    )
   }
 
-  renderSelectField = field => {
+  renderSelectField(field) {
     const renderOptionList = field.options.map(option => {
       return (
         <option key={option.name} value={option.name}>
           {option.name}
         </option>
-      );
-    });
+      )
+    })
 
     return (
       <FormGroup>
@@ -41,9 +44,12 @@ class CreatePost extends Component {
         <FormControl componentClass="select" {...field.input}>
           {renderOptionList}
         </FormControl>
+        <div className="danger">
+          {field.meta.touched ? field.meta.error : ''}
+        </div>
       </FormGroup>
-    );
-  };
+    )
+  }
 
   renderTextAreaField(field) {
     return (
@@ -54,12 +60,20 @@ class CreatePost extends Component {
           placeholder={field.label}
           {...field.input}
         />
+        <div className="danger">
+          {field.meta.touched ? field.meta.error : ''}
+        </div>
       </FormGroup>
-    );
+    )
+  }
+
+  onSubmit = values => {
+    this.props.history.push('/')
+    this.props.createPost(values)
   }
 
   componentDidMount() {
-    this.props.getCategories();
+    this.props.getCategories()
   }
 
   render() {
@@ -73,9 +87,11 @@ class CreatePost extends Component {
               </Link>
             </Col>
           </Row>
+
           <Row className="post">
             <Col xs={12}>
-              <form>
+              <h2>Create Post</h2>
+              <form onSubmit={this.props.handleSubmit(this.onSubmit)}>
                 <Field
                   label="Title"
                   name="title"
@@ -90,8 +106,8 @@ class CreatePost extends Component {
 
                 <Field
                   component={this.renderSelectField}
-                  name="Category"
                   label="Category"
+                  name="category"
                   options={this.props.categories}
                 />
 
@@ -101,32 +117,72 @@ class CreatePost extends Component {
                   component={this.renderTextAreaField}
                 />
 
-                <Button type="submit">Submit</Button>
+                <Button bsStyle="primary" type="submit">
+                  Submit
+                </Button>
+                <Button
+                  bsStyle="danger"
+                  onClick={() => {
+                    this.props.history.push('/')
+                  }}
+                >
+                  Cancel
+                </Button>
               </form>
             </Col>
           </Row>
         </Grid>
       </div>
-    );
+    )
   }
+}
+
+function validate(values) {
+  const errors = {}
+
+  if (!values.title) {
+    errors.title = 'Required'
+  } else if (values.title.length < 5) {
+    errors.title = 'Title must be atleast 5 characters long'
+  }
+
+  if (!values.author) {
+    errors.author = 'Required'
+  } else if (values.author.length < 5) {
+    errors.author = 'Author must be atleast 5 characters long'
+  }
+
+  if (!values.category) {
+    errors.category = 'Required'
+  }
+
+  if (!values.body) {
+    errors.body = 'Required'
+  } else if (values.body.length < 5) {
+    errors.body = 'Body must be atleast 5 characters long'
+  }
+
+  return errors
 }
 
 function mapStateToProps(state) {
   return {
     categories: state.categories,
-  };
+  }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    getCategories: data => dispatch(getCategories(data)),
-  };
+    getCategories: () => dispatch(getCategories()),
+    createPost: data => dispatch(createPost(data)),
+  }
 }
 
 CreatePost = reduxForm({
   form: 'CreatePost',
-})(CreatePost);
+  validate,
+})(CreatePost)
 
-CreatePost = connect(mapStateToProps, mapDispatchToProps)(CreatePost);
+CreatePost = connect(mapStateToProps, mapDispatchToProps)(CreatePost)
 
-export default CreatePost;
+export default CreatePost

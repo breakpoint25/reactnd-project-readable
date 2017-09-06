@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
-import './App.css';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
-import { Link } from 'react-router-dom';
-import UpArrowIcon from 'react-icons/lib/fa/arrow-circle-o-up';
-import DownArrowIcon from 'react-icons/lib/fa/arrow-circle-down';
-import HomeIcon from 'react-icons/lib/fa/home';
-import Moment from 'react-moment';
-import { getPosts } from '../actions';
+import React, { Component } from 'react'
+import './App.css'
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router'
+import { Link } from 'react-router-dom'
+import UpArrowIcon from 'react-icons/lib/fa/arrow-circle-o-up'
+import DownArrowIcon from 'react-icons/lib/fa/arrow-circle-down'
+import HomeIcon from 'react-icons/lib/fa/home'
+import Moment from 'react-moment'
+import { getPosts } from '../actions'
 import {
   Grid,
   Row,
@@ -15,11 +15,11 @@ import {
   Button,
   DropdownButton,
   MenuItem,
-} from 'react-bootstrap';
+} from 'react-bootstrap'
 
 class App extends Component {
   componentDidMount() {
-    this.props.getPosts(this.props.match.params.category);
+    this.props.getPosts(this.props.match.params.category)
   }
 
   generatePostsList = () => {
@@ -28,11 +28,11 @@ class App extends Component {
         <Row className="post">
           <Col xs={12}>No posts to show in this category.</Col>
         </Row>
-      );
+      )
     }
 
     return Object.keys(this.props.posts).map(key => {
-      const post = this.props.posts[key];
+      const post = this.props.posts[key]
 
       return (
         <Row key={post.id} className="post">
@@ -51,12 +51,13 @@ class App extends Component {
               <strong>
                 <Link to={`/${post.category}`}>{post.category}</Link>
               </strong>
+              <p className="commentCount">{post.comments} comments</p>
             </div>
           </Col>
         </Row>
-      );
-    });
-  };
+      )
+    })
+  }
 
   render() {
     return (
@@ -83,7 +84,7 @@ class App extends Component {
               <Button
                 bsStyle="primary"
                 onClick={() => {
-                  this.props.history.push('/create');
+                  this.props.history.push('/create')
                 }}
               >
                 Create Post
@@ -92,20 +93,20 @@ class App extends Component {
           </Row>
         </Grid>
       </div>
-    );
+    )
   }
 }
 
 function mapStateToProps(state) {
   return {
     posts: state.posts,
-  };
+  }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     getPosts: data => dispatch(getPosts(data)),
-  };
+  }
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App))
