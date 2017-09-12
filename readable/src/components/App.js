@@ -7,7 +7,13 @@ import UpArrowIcon from 'react-icons/lib/fa/arrow-circle-o-up'
 import DownArrowIcon from 'react-icons/lib/fa/arrow-circle-down'
 import HomeIcon from 'react-icons/lib/fa/home'
 import Moment from 'react-moment'
-import { getPosts } from '../actions'
+import {
+  getPosts,
+  deletePost,
+  updateVote,
+  sortByPosts,
+  setPostToEdit,
+} from '../actions'
 import {
   Grid,
   Row,
@@ -31,15 +37,47 @@ class App extends Component {
       )
     }
 
-    return Object.keys(this.props.posts).map(key => {
-      const post = this.props.posts[key]
+    const postIds = Object.keys(this.props.posts)
+
+    if (this.props.sortBy === 'timestampDesc') {
+      postIds.sort((a, b) => {
+        return this.props.posts[b].timestamp - this.props.posts[a].timestamp
+      })
+    } else if (this.props.sortBy === 'voteScoreDesc') {
+      postIds.sort((a, b) => {
+        return this.props.posts[b].voteScore - this.props.posts[a].voteScore
+      })
+    }
+
+    return postIds.map(id => {
+      const post = this.props.posts[id]
 
       return (
         <Row key={post.id} className="post">
           <Col className="voteScore" xs={5} sm={2}>
-            <UpArrowIcon className="arrow" />
+            <UpArrowIcon
+              className="arrow"
+              onClick={() => {
+                const vote = {
+                  id: post.id,
+                  type: 'upVote',
+                }
+
+                this.props.updateVote(vote)
+              }}
+            />
             <div className="score">{post.voteScore}</div>
-            <DownArrowIcon className="arrow" />
+            <DownArrowIcon
+              className="arrow"
+              onClick={() => {
+                const vote = {
+                  id: post.id,
+                  type: 'downVote',
+                }
+
+                this.props.updateVote(vote)
+              }}
+            />
           </Col>
           <Col className="postRow" xs={7} sm={10}>
             <Link className="title" to={`/${post.category}/${post.id}`}>
@@ -53,6 +91,24 @@ class App extends Component {
               </strong>
               <p className="commentCount">{post.comments} comments</p>
             </div>
+            <Button
+              bsStyle="link"
+              onClick={() => {
+                this.props.setPostToEdit()
+                this.props.history.push(`/${post.category}/${post.id}`)
+              }}
+            >
+              Edit
+            </Button>
+            <Button
+              className="danger"
+              bsStyle="link"
+              onClick={() => {
+                this.props.deletePost(post.id)
+              }}
+            >
+              Delete
+            </Button>
           </Col>
         </Row>
       )
@@ -68,11 +124,26 @@ class App extends Component {
               <Link to="/">
                 <HomeIcon className="homeIcon" />
               </Link>
-              <DropdownButton id="sort" bsStyle="default" title="Sort order">
-                <MenuItem eventKey="1" active>
-                  Date suvmitted
+              <DropdownButton
+                id="sort"
+                bsStyle="default"
+                title="Sort order"
+                onSelect={eventKey => {
+                  this.props.sortByPosts(eventKey)
+                }}
+              >
+                <MenuItem
+                  eventKey="voteScoreDesc"
+                  active={this.props.sortBy === 'voteScoreDesc' ? true : false}
+                >
+                  Top score
                 </MenuItem>
-                <MenuItem eventKey="2">Top score</MenuItem>
+                <MenuItem
+                  eventKey="timestampDesc"
+                  active={this.props.sortBy === 'timestampDesc' ? true : false}
+                >
+                  Date submitted
+                </MenuItem>
               </DropdownButton>
             </Col>
           </Row>
@@ -80,7 +151,7 @@ class App extends Component {
           {this.generatePostsList()}
 
           <Row className="postFooter">
-            <Col className="" xs={12}>
+            <Col xs={12}>
               <Button
                 bsStyle="primary"
                 onClick={() => {
@@ -99,13 +170,18 @@ class App extends Component {
 
 function mapStateToProps(state) {
   return {
-    posts: state.posts,
+    posts: state.posts.posts,
+    sortBy: state.posts.sortBy,
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     getPosts: data => dispatch(getPosts(data)),
+    deletePost: data => dispatch(deletePost(data)),
+    updateVote: data => dispatch(updateVote(data)),
+    sortByPosts: data => dispatch(sortByPosts(data)),
+    setPostToEdit: () => dispatch(setPostToEdit()),
   }
 }
 

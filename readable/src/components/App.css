@@ -3,10 +3,17 @@
   /* min-width: 300px; */
 }
 
-.danger {
+.error {
   padding-left: 10px;
-  color: #d9534f;
   font-weight: 600;
+}
+
+.danger {
+  color: #d9534f;
+}
+
+.danger:hover {
+  color: #d9534f;
 }
 
 .homeIcon {
@@ -24,6 +31,11 @@
   border: 1px solid #ddd;
   border-radius: 4px;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+}
+
+.postForm {
+  margin-bottom: 20px;
+  padding: 15px;
 }
 
 .postHeader {

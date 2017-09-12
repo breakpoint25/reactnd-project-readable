@@ -9,8 +9,6 @@ import {
   Row,
   Col,
   Button,
-  // DropdownButton,
-  // MenuItem,
   FormGroup,
   ControlLabel,
   FormControl,
@@ -19,10 +17,10 @@ import {
 class CreatePost extends Component {
   renderInputField(field) {
     return (
-      <FormGroup className="has-danger">
+      <FormGroup>
         <ControlLabel>{field.label}</ControlLabel>
         <FormControl type="text" placeholder={field.label} {...field.input} />
-        <div className="danger">
+        <div className="error danger">
           {field.meta.touched ? field.meta.error : ''}
         </div>
       </FormGroup>
@@ -44,7 +42,7 @@ class CreatePost extends Component {
         <FormControl componentClass="select" {...field.input}>
           {renderOptionList}
         </FormControl>
-        <div className="danger">
+        <div className="error danger">
           {field.meta.touched ? field.meta.error : ''}
         </div>
       </FormGroup>
@@ -68,8 +66,9 @@ class CreatePost extends Component {
   }
 
   onSubmit = values => {
-    this.props.history.push('/')
     this.props.createPost(values)
+    // TODO - make this a call back that pends on success response of post added
+    this.props.history.push('/')
   }
 
   componentDidMount() {
@@ -166,7 +165,13 @@ function validate(values) {
 }
 
 function mapStateToProps(state) {
+  let defaultCategory = undefined;
+  if(state.categories.length !== 0) {
+    defaultCategory = state.categories[0].name
+  }
+
   return {
+    initialValues: { category: defaultCategory },
     categories: state.categories,
   }
 }
@@ -181,6 +186,7 @@ function mapDispatchToProps(dispatch) {
 CreatePost = reduxForm({
   form: 'CreatePost',
   validate,
+  enableReinitialize : true,
 })(CreatePost)
 
 CreatePost = connect(mapStateToProps, mapDispatchToProps)(CreatePost)

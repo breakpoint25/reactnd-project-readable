@@ -1,65 +1,9 @@
 import { combineReducers } from 'redux'
 import { reducer as formReducer } from 'redux-form'
-
-import {
-  GET_POSTS,
-  GET_CATEGORIES,
-  GET_COMMENTS,
-  GET_POST,
-  CREATE_POST,
-} from '../actions'
-
-function posts(state = {}, action) {
-  switch (action.type) {
-    case GET_POSTS:
-      const posts = {}
-
-      for (let post of action.payload) {
-        posts[post.id] = post
-      }
-
-      return posts
-    case CREATE_POST:
-      return { ...state, [action.payload.id]: action.payload }
-    default:
-      return state
-  }
-}
-
-function categories(state = [], action) {
-  switch (action.type) {
-    case GET_CATEGORIES:
-      const categories = action.payload.categories
-
-      return categories
-    default:
-      return state
-  }
-}
-
-function comments(state = {}, action) {
-  switch (action.type) {
-    case GET_COMMENTS:
-      const comments = {}
-
-      for (let comment of action.payload) {
-        comments[comment.id] = comment
-      }
-
-      return comments
-    default:
-      return state
-  }
-}
-
-function post(state = {}, action) {
-  switch (action.type) {
-    case GET_POST:
-      return action.payload
-    default:
-      return state
-  }
-}
+import posts from './posts'
+import categories from './categories'
+import comments from './comments'
+import post from './post'
 
 export default combineReducers({
   posts,
