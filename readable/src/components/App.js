@@ -94,7 +94,7 @@ class App extends Component {
             <Button
               bsStyle="link"
               onClick={() => {
-                this.props.setPostToEdit()
+                this.props.setPostToEdit(true)
                 this.props.history.push(`/${post.category}/${post.id}`)
               }}
             >
@@ -181,7 +181,7 @@ function mapDispatchToProps(dispatch) {
     deletePost: data => dispatch(deletePost(data)),
     updateVote: data => dispatch(updateVote(data)),
     sortByPosts: data => dispatch(sortByPosts(data)),
-    setPostToEdit: () => dispatch(setPostToEdit()),
+    setPostToEdit: data => dispatch(setPostToEdit(data)),
   }
 }
 

@@ -157,9 +157,10 @@ export function sortByPosts(eventKey) {
   }
 }
 
-export function setPostToEdit() {
+export function setPostToEdit(flag) {
   return {
     type: SET_POST_TO_EDIT,
+    payload: flag,
   }
 }
 

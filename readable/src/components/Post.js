@@ -204,7 +204,7 @@ class Post extends Component {
               <Button
                 bsStyle="link"
                 onClick={() => {
-                  this.props.setPostToEdit()
+                  this.props.setPostToEdit(true)
                 }}
               >
                 Edit
@@ -252,6 +252,10 @@ class Post extends Component {
     this.props.getComments(this.props.match.params.post_id)
   }
 
+  componentWillUnmount() {
+    this.props.setPostToEdit(false)
+  }
+
   render() {
     return (
       <div className="App">
@@ -285,7 +289,7 @@ function mapDispatchToProps(dispatch) {
     editPost: (data, postId) => dispatch(editPost(data, postId)),
     deletePost: data => dispatch(deletePost(data)),
     updateVote: data => dispatch(updateVote(data)),
-    setPostToEdit: () => dispatch(setPostToEdit()),
+    setPostToEdit: data => dispatch(setPostToEdit(data)),
     getComments: data => dispatch(getComments(data)),
     createComment: (data, postId) => dispatch(createComment(data, postId)),
     editComment: (data, commentId) => dispatch(editComment(data, commentId)),

@@ -13,7 +13,7 @@ function post(state = { post: {}, postToEdit: false }, action) {
     case EDIT_POST:
       return { post: action.payload, postToEdit: false }
     case SET_POST_TO_EDIT:
-      return { ...state, postToEdit: true }
+      return { ...state, postToEdit: action.payload }
     default:
       return state
   }
