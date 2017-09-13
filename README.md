@@ -11,4 +11,5 @@ The back-end api 'server' was provided by Udacity.
 You must install and start the server for both the 'readable' and 'server' folders to run both concurrently using the below steps.
 
 Install packages: `npm install`
+
 Launch server: `npm start`

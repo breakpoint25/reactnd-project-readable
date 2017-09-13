@@ -3,6 +3,7 @@
 ## Installation
 
 Install packages: `npm install`
+
 Launch server: `npm start`
 
 You must also follow the described steps in the server folder to run the back-end server concurrently.
