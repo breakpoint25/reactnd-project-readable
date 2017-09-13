@@ -1,15 +1,20 @@
-# Readable Project
-Readable project for the Udacity Nanodegree.
+# Readable
+This is the final assessment project for Udacity's Nanodegree React & Redux course.
 
-the front-end application 'readable' was created from scratch to provide a Reddit-like application.
+A back-end api called 'server' was provided by Udacity for short term storage of Post and Comment data.
 
-The back-end api 'server' was provided by Udacity.
+A front-end application called 'readable' was created from scratch to provide a Reddit-like application where users can create Posts, Comments, and Voting.
 
+The application was built primarly using React, redux, and React-Router.
+
+[Project Rubric](https://review.udacity.com/#!/rubrics/1017/view)
 
 ## Installation
 
-You must install and start the server for both the 'readable' and 'server' folders to run both concurrently using the below steps.
+You must install and start the servers from both the 'readable' and 'server' directories.
 
 Install packages: `npm install`
 
 Launch server: `npm start`
+
+Both servers must run concurrently for the application to operate properly.
