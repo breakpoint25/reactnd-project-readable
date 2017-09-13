@@ -5,7 +5,7 @@ A back-end api called 'server' was provided by Udacity for short term storage of
 
 A front-end application called 'readable' was created from scratch to provide a Reddit-like application where users can create Posts, Comments, and Voting.
 
-The application was built primarly using React, redux, and React-Router.
+The application was built primarly using React, Redux, and React-Router.
 
 [Project Rubric](https://review.udacity.com/#!/rubrics/1017/view)
 
