@@ -1,0 +1,84 @@
+.App {
+  /* margin: 20px; */
+  /* min-width: 300px; */
+}
+
+.error {
+  padding-left: 10px;
+  font-weight: 600;
+}
+
+.danger {
+  color: #d9534f;
+}
+
+.danger:hover {
+  color: #d9534f;
+}
+
+.homeIcon {
+  margin-right: 10px;
+  font-size: 25px;
+}
+
+.btn {
+  margin-right: 10px;
+}
+
+.post {
+  margin-bottom: 20px;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+}
+
+.postForm {
+  margin-bottom: 20px;
+  padding: 15px;
+}
+
+.postHeader {
+  margin-bottom: 20px;
+}
+
+.postFooter {
+  margin-bottom: 20px;
+}
+
+.post .voteScore {
+  text-align: center;
+  font-weight: 500;
+}
+
+.post .voteScore .score {
+  padding: 10px;
+  font-size: 25px;
+}
+
+.post .voteScore .arrow {
+  font-size: 25px;
+}
+
+.post .voteScore .arrow:hover {
+  cursor: pointer;
+}
+
+.post .postRow {
+  padding: 10px 0;
+}
+
+.post .postRow .title {
+  font-weight: 600;
+  font-size: 20px;
+}
+
+.post .postRow .submittedBy {
+  color: gray;
+  font-size: 14px;
+  padding: 10px;
+}
+
+.commentCount {
+  margin-top: 10px;
+}
