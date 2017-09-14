@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import './App.css'
 import { connect } from 'react-redux'
-import { withRouter } from 'react-router'
 import { Link } from 'react-router-dom'
 import UpArrowIcon from 'react-icons/lib/fa/arrow-circle-o-up'
 import DownArrowIcon from 'react-icons/lib/fa/arrow-circle-down'
@@ -89,7 +88,11 @@ class App extends Component {
               <strong>
                 <Link to={`/${post.category}`}>{post.category}</Link>
               </strong>
-              <p className="commentCount">{post.comments} comments</p>
+              <p className="commentCount">
+                <Link to={`/${post.category}/${post.id}#comment-section`}>
+                  {post.comments} comments
+                </Link>
+              </p>
             </div>
             <Button
               bsStyle="link"
@@ -185,4 +188,4 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App))
+export default connect(mapStateToProps, mapDispatchToProps)(App)

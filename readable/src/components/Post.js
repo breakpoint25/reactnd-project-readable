@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import UpArrowIcon from 'react-icons/lib/fa/arrow-circle-o-up'
@@ -145,7 +146,7 @@ class Post extends Component {
 
   generatePost = () => {
     // Server returns a payload with an error property if post never existed
-    // or an empty payload if post was deleted. Yeah, that is odd.
+    // or an empty payload if post was deleted.
     if (this.props.post.error || Object.keys(this.props.post).length === 0) {
       return (
         <Row className="post">
@@ -239,7 +240,7 @@ class Post extends Component {
         </Row>
         <Row className="postFooter">
           <Col className="" xs={12}>
-            <h3>{Object.keys(this.props.comments).length} comments</h3>
+            <h3 ref='comment-section'>{Object.keys(this.props.comments).length} comments</h3>
           </Col>
         </Row>
         {this.generateCommentsList()}
@@ -255,6 +256,19 @@ class Post extends Component {
   componentWillUnmount() {
     this.props.setPostToEdit(false)
   }
+
+  componentDidUpdate() {
+    // The below code allows for the mimicing of hash anchor
+    // tag URL scrolling that is currently absent in react-router.
+    // This is being used to link to comment section from App page.
+    const hash = this.props.location.hash.replace('#', '');
+    if (hash) {
+        let node = ReactDOM.findDOMNode(this.refs[hash]);
+        if (node) {
+            node.scrollIntoView();
+        }
+    }
+}
 
   render() {
     return (
