@@ -13,8 +13,14 @@ The application was built primarly using React, Redux, and React-Router.
 
 You must install and start the servers from both the 'readable' and 'server' directories.
 
-Install packages: `npm install`
+* Install and start the Readable front-end application
+    - `cd readable`
+    - `npm install`
+    - `npm start`
 
-Launch server: `npm start`
+* Install and start the Readable back-end API server
+    - `cd server`
+    - `npm install`
+    - `node server`
 
 Both servers must run concurrently for the application to operate properly.
