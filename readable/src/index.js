@@ -11,7 +11,7 @@ import store from './store'
 
 ReactDOM.render(
   <Provider store={store}>
-    <BrowserRouter>
+    <BrowserRouter basename={process.env.REACT_APP_BASENAME}>
       <Switch>
         <Route path="/create" component={CreatePost} />
         <Route path="/:category/:post_id" component={Post} />
