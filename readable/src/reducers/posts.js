@@ -14,8 +14,10 @@ function posts(state = { posts: {}, sortBy: 'voteScoreDesc' }, action) {
     case GET_POSTS:
       posts = {}
 
-      for (let post of action.payload) {
-        posts[post.id] = post
+      if (!action.error) {
+        for (let post of action.payload) {
+          posts[post.id] = post
+        }
       }
 
       return { ...state, posts }

@@ -1,4 +1,4 @@
-const baseURL = 'http://localhost:5001'
+const baseURL = process.env.REACT_APP_API_URL
 
 const headers = new Headers()
 headers.append('Authorization', 'readable-auth-123')
